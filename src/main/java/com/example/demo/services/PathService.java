@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.PathDTO;
 import com.example.demo.entities.Trip;
 import com.example.demo.exceptions.DuplicateException;
+import com.example.demo.exceptions.PathNotFoundException;
 import com.example.demo.entities.Path;
 import com.example.demo.repositories.PathRepository;
 
@@ -79,7 +80,7 @@ public class PathService {
     }
 
     private Trip selectCheapest(List<Trip> trips) {
-        return trips.stream().min(Comparator.comparing(Trip::getCost)).orElseThrow();
+        return trips.stream().min(Comparator.comparing(Trip::getCost)).orElseThrow(() -> new PathNotFoundException("There isn't path between stations"));
     }
 
     private void validatePath(PathDTO pathDTO) {

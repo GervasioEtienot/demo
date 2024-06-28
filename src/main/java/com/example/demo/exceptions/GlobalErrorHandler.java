@@ -36,4 +36,10 @@ public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
         ErrorDTO error = new ErrorDTO(e.getMessage(), new Date());
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(value = PathNotFoundException.class)
+    protected ResponseEntity<Object> handleException(PathNotFoundException e) {
+        ErrorDTO error = new ErrorDTO(e.getMessage(), new Date());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }
